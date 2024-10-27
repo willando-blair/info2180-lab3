@@ -15,6 +15,14 @@ document.addEventListener('DOMContentLoaded', () => {
 	function startGame() {
 		cells.forEach((arrayItem, index, fullArray)=> {arrayItem.setAttribute("cellnum", index)});
 		cells.forEach(cell=> cell.addEventListener("click", cellSelected));
+        cells.forEach(cell=> cell.addEventListener("mouseover", function() {
+			cell.classList.add("hover");
+		}));
+		cells.forEach(cell=> cell.addEventListener("mouseleave", function() {
+			if(Array.from(cell.classList).includes("hover")) {
+				cell.classList.remove("hover");
+			}
+		}));
 		statusMsg.classList.add("status");
 		statusMsg.textContent = `${currentPlayer}'s turn`;
 		running = true;
