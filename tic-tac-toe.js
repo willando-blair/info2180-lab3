@@ -34,6 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
 		}));
 		statusMsg.classList.add("status");
 		statusMsg.textContent = `${currentPlayer}'s turn`;
+        newGameBtn.addEventListener("click", newGame);
 		running = true;
 	}
 
@@ -98,5 +99,16 @@ document.addEventListener('DOMContentLoaded', () => {
 		else{
 			changePlayer();
 		}
+	}
+
+    function newGame() {
+		currentPlayer = "X";
+		statusMsg.classList.remove("you-won");
+		statusMsg.textContent = `${currentPlayer}'s turn`;
+		options = ["", "", "", "", "", "", "", "", ""];
+		cells.forEach(cell => cell.textContent = "");
+		cells.forEach(cell => cell.classList.remove("O"));
+		cells.forEach(cell => cell.classList.remove("X"));
+		running = true;
 	}
 });
