@@ -5,7 +5,16 @@ document.addEventListener('DOMContentLoaded', () => {
 	cells.forEach((div)=> {
 		div.classList.add("square");
 	});
-
+    const winList = [
+		[0, 1, 2],
+		[3, 4, 5],
+		[6, 7, 8],
+		[0, 3, 6],
+		[1, 4, 7],
+		[2, 5, 8],
+		[0, 4, 8],
+		[2, 4, 6]
+	];
     let options = ["", "", "", "", "", "", "", "", ""];
 	let currentPlayer = "X";
     let running = false;
@@ -36,7 +45,7 @@ document.addEventListener('DOMContentLoaded', () => {
 		}
 		else {
 			updateCell(this, cellIndex);
-			changePlayer();
+			checkWinner();
 		}
 	}
 
@@ -54,5 +63,40 @@ document.addEventListener('DOMContentLoaded', () => {
     function changePlayer() {
 		currentPlayer = (currentPlayer == "X") ? "O":"X";
 		statusMsg.textContent = `${currentPlayer}'s turn`;
+	}
+
+    function checkWinner() {
+		let roundWon = false;
+
+		for(let c = 0; c < winList.length; c++) {
+			const condition = winList[c];
+			const cellA = options[condition[0]];
+			const cellB = options[condition[1]];
+			const cellC = options[condition[2]];
+
+			if(cellA == "" || cellB == "" || cellC == "") {
+				continue;
+			}
+
+			if(cellA == cellB && cellB == cellC) {
+				roundWon = true;
+				break;
+			}
+		}
+
+		if(roundWon) {
+			statusMsg.classList.add("you-won");
+			statusMsg.textContent = `Congratulations! ${currentPlayer} is the Winner!`;
+			running = false;
+		}
+
+		else if(!options.includes("")) {
+			statusMsg.textContent = 'Draw!';
+			running = false;
+		}
+
+		else{
+			changePlayer();
+		}
 	}
 });
